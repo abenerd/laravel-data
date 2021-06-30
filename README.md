@@ -568,7 +568,7 @@ Lazy::create(fn() => SongData::collection($album->songs))->defaultIncluded();
 The property will now always be included when the data object is transformed. You can explititly exlude properties that were default incuded as such:
 
 ```php
-AlbumData::create(Album::first())->exclude('songs')
+AlbumData::create(Album::first())->exclude('songs');
 ```
 
 #### Include by query string
