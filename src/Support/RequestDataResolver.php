@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionProperty;
-use ReflectionType;
 use Spatie\LaravelData\Attributes\DataValidationAttribute;
 use Spatie\LaravelData\Data;
 
@@ -26,10 +25,10 @@ class RequestDataResolver
     {
         /** @var \Spatie\LaravelData\Data $data */
         $data = collect($this->class->getProperties(ReflectionProperty::IS_PUBLIC))
-            ->mapWithKeys(fn(ReflectionProperty $property) => [
+            ->mapWithKeys(fn (ReflectionProperty $property) => [
                 $property->getName() => $request->input($property->getName()),
             ])
-            ->pipe(fn(Collection $properties) => $this->class->newInstance(...$properties));
+            ->pipe(fn (Collection $properties) => $this->class->newInstance(...$properties));
 
         return $data;
     }
@@ -37,8 +36,8 @@ class RequestDataResolver
     public function getRules(): array
     {
         return collect($this->class->getProperties(ReflectionProperty::IS_PUBLIC))
-            ->mapWithKeys(fn(ReflectionProperty $property) => [
-                $property->getName() => $this->getRulesFromAttributes(...$property->getAttributes())
+            ->mapWithKeys(fn (ReflectionProperty $property) => [
+                $property->getName() => $this->getRulesFromAttributes(...$property->getAttributes()),
             ])
             ->toArray();
     }
@@ -47,10 +46,10 @@ class RequestDataResolver
     {
         $rules = [];
 
-        foreach ($attributes as $attribute){
+        foreach ($attributes as $attribute) {
             $initiatedAttribute = $attribute->newInstance();
 
-            if($initiatedAttribute instanceof DataValidationAttribute){
+            if ($initiatedAttribute instanceof DataValidationAttribute) {
                 $rules = array_merge($rules, $initiatedAttribute->getRules());
             }
         }

@@ -3,7 +3,6 @@
 namespace Spatie\LaravelData\Casts;
 
 use ReflectionNamedType;
-use ReflectionProperty;
 
 interface Cast
 {

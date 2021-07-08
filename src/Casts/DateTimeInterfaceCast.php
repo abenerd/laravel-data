@@ -4,15 +4,14 @@ namespace Spatie\LaravelData\Casts;
 
 use DateTimeInterface;
 use ReflectionNamedType;
-use ReflectionProperty;
 
 class DateTimeInterfaceCast implements Cast
 {
-    public function cast(ReflectionNamedType $reflectionType, mixed $value): DateTimeInterface|Uncastable
+    public function cast(ReflectionNamedType $reflectionType, mixed $value): DateTimeInterface | Uncastable
     {
         $name = $reflectionType->getName();
 
-        if(! is_a($name, DateTimeInterface::class, $value)){
+        if (! is_a($name, DateTimeInterface::class, $value)) {
             return Uncastable::create();
         }
 

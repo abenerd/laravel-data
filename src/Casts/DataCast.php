@@ -13,7 +13,7 @@ use Spatie\LaravelData\Lazy;
 
 class DataCast implements Cast
 {
-    public function cast(ReflectionNamedType $reflectionType, mixed $value): Data|Uncastable
+    public function cast(ReflectionNamedType $reflectionType, mixed $value): Data | Uncastable
     {
         $name = $reflectionType->getName();
 
@@ -29,10 +29,10 @@ class DataCast implements Cast
 
         /** @var \Spatie\LaravelData\Data $data */
         $data = collect($reflection->getProperties(ReflectionProperty::IS_PUBLIC))
-            ->mapWithKeys(fn(ReflectionProperty $property) => [
+            ->mapWithKeys(fn (ReflectionProperty $property) => [
                 $property->getName() => $this->castValue($property, $value[$property->getName()] ?? null),
             ])
-            ->pipe(fn(Collection $properties) => new $name(...$properties));
+            ->pipe(fn (Collection $properties) => new $name(...$properties));
 
         return $data;
     }
@@ -86,7 +86,7 @@ class DataCast implements Cast
 
         $types = array_filter(
             $type->getTypes(),
-            fn(ReflectionNamedType $childType) => $childType->getName() !== Lazy::class || $childType !== 'null'
+            fn (ReflectionNamedType $childType) => $childType->getName() !== Lazy::class || $childType !== 'null'
         );
 
         return count($types) > 0 ? current($types) : null;
